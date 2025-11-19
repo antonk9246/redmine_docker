@@ -1,0 +1,44 @@
+#issue_rules_table label {
+    margin: 0px;
+    text-align: left;
+}
+
+#issue_rules_table td {
+    vertical-align: top;
+}
+
+#issue_rules_table img {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#issue_rules_table  a[name="master_tracker"]{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: black;
+    /* text-decoration: underline; */
+    cursor: pointer;
+    width: 80%;
+    text-align: left;
+}
+
+#issue_rules_table  input[type="checkbox"]{
+text-align: right;
+}
+
+#issue_rules_table .tracker-box {
+    display: flex;
+}
+
+#issue_rules_table .tracker-box .tracker-checkbox {
+    text-align: end;
+}
+
+#issue_rules_table .tracker-box a {
+    width: 100%;
+    line-height: 2;
+}

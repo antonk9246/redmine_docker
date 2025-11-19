@@ -1,0 +1,21 @@
+# German strings go here for Rails i18n
+de:
+  field_project_name: Projektname
+  field_git: Git
+  project_git_true: True
+  project_git_false: False
+  field_next_roadmap_due_date: Nächstes Roadmap-Fälligkeitsdatum
+  field_favourites: Favoriten
+  label_table_view: Tabellenansicht
+  label_tree_view: Hierarchische Ansicht
+  enumeration_project_priorities: Projektprioritäten
+  enumeration_project_statuses: Projektstatus
+  field_roadmap_due_at: Roadmap fällig am
+  field_enum_priority: Priorität
+  field_enum_status: Enum-Status
+  label_issue_type: Tracker
+  label_having_module: Modul
+  project_status_inactive: inaktiv
+  label_view: Ansicht
+  option_table: Tabelle
+  option_hierarchical_view: Hierarchisch

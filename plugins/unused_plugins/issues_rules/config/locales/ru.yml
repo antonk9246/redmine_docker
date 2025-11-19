@@ -1,0 +1,14 @@
+ru:
+  managers_tracker: Трекер Руководителей проектов
+  financial_tracker: Трекер Финансовых задач
+  trackers_must_be_different: Трекеры должны быть разными
+  tracker_contains_tasks: Трекер %{name} содержит задачи
+  error_parent_task_fin_tracker: У задачи с трекером "%{name}" не должно быть родительских задач
+  error_parent_task_pm_tracker: У задачи с трекером "%{name}" либо не должно быть родительской задачи , либо это должна быть  задача c трекером "%{name}"
+  error_parent_task_standard_tracker: Для этой задачи не найдена родительская задача с трекером "%{name}"
+  error_parent_task_tracker: Недопустимая родительская задача
+  master_tracker: Мастер трекер
+  parent_tracker: Родительский трекер
+  child_tracker: Дочерний трекер
+  error_time_entry_task_tracker: Списание времени на задачу с таким трекером не предусмотрено
+  add_tracker_button: Добваить трекер

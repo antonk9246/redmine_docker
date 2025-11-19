@@ -1,0 +1,123 @@
+<script type="text/javascript">
+  var id_counter = 0;
+
+ window.onload = function () {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.get('master_tracker') == null) {
+      var need_element = <%= Tracker.first.name %>
+      urlParams.append('master_tracker', '<%= Tracker.first.name %>');
+      document.location.search = urlParams.toString();
+    }
+    else {
+      var need_element = document.getElementById(urlParams.get('master_tracker'));
+    }
+    need_element.style.backgroundColor = "#cecece";
+    deleteDropdown();
+  };
+
+  function setAllElementWhite(){
+    var master_tracker_array = document.getElementsByName("master_tracker")
+    for (var i = 0; i < master_tracker_array.length; i++) {
+      master_tracker_array[i].parentNode.style.backgroundColor = "white"
+    }
+  };   
+
+  function deleteDropdown() {
+    var bucket_array = document.getElementsByName("bucket_icon")
+
+    for (var i = 0; i < bucket_array.length; i++) {
+      bucket_array[i].onclick = function () {
+        this.parentNode.parentNode.removeChild(this.parentNode)
+      }
+    } 
+  };
+
+  function addDropdown(options_array,column_for_add) {
+    var fild = document.getElementById(column_for_add);
+    var div_element = document.createElement('div');
+    var select_element = document.createElement('select');
+    var bucket_image = new Image();
+    if (column_for_add == "parent_td" ){
+      select_element.setAttribute("name","parent_tracker[]")
+    }else{
+      select_element.setAttribute("name","child_tracker[]")
+    };
+    bucket_image.src = "/images/delete.png"
+    bucket_image.name="bucket_icon"
+    bucket_image.id="bucket_icon" + id_counter
+    div_element.id = 'dropdown' + id_counter
+    id_counter = id_counter + 1
+    if (column_for_add == 'parent_td'){
+      var empty_option = document.createElement("option");
+      empty_option.text = "<-Project->"
+      empty_option.value = 0
+      select_element.appendChild(empty_option);
+    }
+
+    for (var i = 0; i < options_array.length; i++) {
+      var option = document.createElement("option");
+      option.value = options_array[i].id;
+      option.text = options_array[i].name;
+      select_element.appendChild(option);
+    }
+
+    div_element.appendChild(select_element);
+    div_element.appendChild(bucket_image);
+    fild.appendChild(div_element);
+    deleteDropdown();
+
+  };
+</script>
+
+<%= stylesheet_link_tag "issues_rules.css", :plugin => "issues_rules" %>
+
+
+<table id="issue_rules_table" border="1">
+  <tr>
+    <th><%= label_tag(l(:parent_tracker)) %></th>
+    <th><%= label_tag(l(:master_tracker)) %></th>
+    <th><%= label_tag(l(:child_tracker)) %></th>
+  </tr>
+  <tr>
+    <td id="parent_td">
+      <% if @parent_trackers%>
+        <% @parent_trackers.each_with_index do |tracker,i|%>
+        <div>
+          <%= select_tag('parent_tracker[]', options_from_collection_for_select(@all_trackers_hash , :id , :name , tracker[:id])) %>
+          <img src="/images/delete.png" name="bucket_icon">
+        </div>
+        <%end%>
+      <%end%>
+    </td>
+
+   <td>
+      <% Tracker.all.each_with_index do |tracker,index| %>
+        <div>
+          <div class="tracker-box">
+            <a id="<%=tracker.name%>" href="?master_tracker=<%=tracker.name%>"><%=tracker.name%></a>
+            <div class="tracker-checkbox">
+               <%= check_box_tag('checkbox[' + tracker.id.to_s + ']', tracker.id , tracker.writeoff_f ) %>
+            </div>
+          </div>
+        </div>
+      <%end%>
+    </td>
+    
+    <td id="child_td"> 
+      <%if @child_trackers%>
+        <% @child_trackers.each_with_index do |tracker,i|%>
+          <div>  
+            <%= select_tag('child_tracker[]', options_from_collection_for_select(Tracker.all, :id, :name, tracker[:id] )) %>
+            <img src="/images/delete.png" name="bucket_icon" >
+          </div>
+        <%end%>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td> <input type="button" value="<%= l(:add_tracker_button)%>" onclick="addDropdown(<%= Tracker.all.to_json%>,'parent_td')"> </td>
+    <td></td>
+    <td> <input type="button" value="<%= l(:add_tracker_button)%>" onclick="addDropdown(<%= Tracker.all.to_json%>,'child_td')"> </td>
+  </tr>
+</table>  

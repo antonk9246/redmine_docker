@@ -1,0 +1,12 @@
+<div id="contact_deals">
+  <div class="contextual">
+    <%= link_to_if_authorized l(:label_crm_deal_new), {:controller => 'deals', :action => 'new', :project_id => @project, :contact_id => @contact} %>
+  </div>
+
+  <h3>Deals <%= "(#{@contact_deals_count})" %></h3>
+  <% if @contact_deals.any? %>
+    <table style="width:100%">
+      <%= render :partial => 'contacts_deals/deal_item', :collection => @contact_deals %>
+    </table>
+  <% end %>
+</div>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/product/zoom_out_map</title>
+    <g id="Icon/product/zoom_out_map" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Clipped" transform="translate(3.000000, 3.000000)" fill="#46ba93">
+            <path d="M12,0 L14.3,2.3 L11.41,5.17 L12.83,6.59 L15.7,3.7 L18,6 L18,0 L12,0 Z M0,6 L2.3,3.7 L5.17,6.59 L6.59,5.17 L3.7,2.3 L6,0 L0,0 L0,6 Z M6,18 L3.7,15.7 L6.59,12.83 L5.17,11.41 L2.3,14.3 L0,12 L0,18 L6,18 Z M18,12 L15.7,14.3 L12.83,11.41 L11.41,12.83 L14.3,15.7 L12,18 L18,18 L18,12 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

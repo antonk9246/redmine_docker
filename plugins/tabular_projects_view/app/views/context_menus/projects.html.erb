@@ -1,0 +1,56 @@
+
+  <ul>
+
+    <li><%= context_menu_link l(:label_issue_new), new_project_issue_path(@project),
+                               :disabled => !@can[:add_issues] %>
+    </li>
+    <li><%= context_menu_link l(:label_version_new), new_project_version_path(@project),
+                               :disabled => !@can[:manage_versions] %>
+    </li>
+    <li><%= context_menu_link l(:label_settings), settings_project_path(@project),
+                               :disabled => !@can[:edit_project] %>
+    </li>
+    <li><%= context_menu_link l(:permission_view_wiki_pages), project_wiki_index_path(@project),
+                               :disabled => !@can[:view_wiki_pages] %>
+    </li>
+    <li><%= context_menu_link l(:project_module_news), project_news_index_path(@project),
+                               :disabled => !@can[:comment_news] %>
+    </li>
+    <li><%= context_menu_link l(:label_tes_case), {:controller => :redcase,:action => :index, :id => @project},
+                              :disabled => !@can[:view_test_cases] %>
+    </li>
+    <li><%= context_menu_link l(:label_roadmap), project_roadmap_path(@project),
+                              :disabled => !@can[:road_map] %>
+    </li>
+    <li><%= context_menu_link l(:label_activity), {:controller => :activities,:action => :index, :id => @project},
+                              :disabled => !@can[:activity] %>
+    </li>
+    <li><%= context_menu_link l(:label_overview), project_path(@project),
+                              :disabled => !@can[:overview] %>
+    </li>
+    <li><%= context_menu_link l(:permission_view_gantt), project_gantt_path(@project),
+                              :disabled => !@can[:view_gantt] %>
+    </li>
+    <li><%= context_menu_link l(:permission_view_files), project_files_path(@project),
+                              :disabled => !@can[:view_files] %>
+    </li>
+
+  </ul>
+
+
+
+<!--@can = {:add_issues => User.current.allowed_to?(:add_issues, @project),-->
+<!--:manage_versions => (User.current.allowed_to?(:manage_versions, @project)),-->
+<!--:edit_project => User.current.allowed_to?(:edit_project, @projects),-->
+<!--:view_wiki_pages => User.current.allowed_to?(:view_wiki_pages, @project),-->
+<!--:comment_news => User.current.allowed_to?(:comment_news, @project),-->
+<!--:view_test_cases => User.current.allowed_to?(:view_test_cases, @projects),-->
+<!--:view_issues => User.current.allowed_to?(:view_issues, @projects),  #roadmap-->
+<!--:activity => true,-->
+<!--:overview => true,-->
+<!--:view_gantt => User.current.allowed_to?(:view_gantt, @projects),-->
+<!--:view_files => User.current.allowed_to?(:view_files, @projects),-->
+
+
+
+

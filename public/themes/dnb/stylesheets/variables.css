@@ -1,0 +1,64 @@
+:root {
+  /* Цвета */
+  --main-blue: #486BED;
+  --secondary-color: #2ecc71;
+  --text-color: #18191A;
+  --black: #000000;
+  --background-color: #f8f9fa;
+
+  /* Размеры */
+  --font-size-xs: 8px;
+  --font-size-s: 12px;
+  --font-size-m: 16px;
+  --font-size-l: 20px;
+  --font-size-xl: 24px;
+  --font-size-xxl: 30px;
+  --font-size-xxxl: 36px;  
+
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Тени */
+
+  /* Радиусы */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+  --radius-xl: 16px;
+
+  /* Текст */
+}
+
+/* Отступы */
+.m-b-8 {
+  margin-bottom: 8px;
+}
+
+.m-b-12 {
+  margin-bottom: 12px;
+}
+
+.m-t-12 {
+  margin-top: 12px;
+}
+
+.m-t-24 {
+  margin-top: 24px;
+}
+
+.m-t-24-i {
+  margin-top: 24px !important;
+}
+
+.m-t-36 {
+  margin-top: 36px;
+}
+
+.m-r-12 {
+  margin-right: 12px;
+}

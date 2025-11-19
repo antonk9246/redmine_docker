@@ -1,0 +1,131 @@
+<%= error_messages_for 'contact', 'note' %>
+
+<% html_title "#{l(:label_contact)} ##{@contact.id}: #{@contact.name}" %>
+
+<div class="contextual">
+	<%= call_hook(:view_contacts_before_actions, :contact => @contact, :project => @project) %>
+	<%= link_to l(:label_profile), user_path(@contact.redmine_user), :class => 'icon icon-user' unless @contact.redmine_user.blank? %>
+	<%= link_to(l(:button_create), {:controller => 'users', :action => 'new_from_contact', :contact_id => @contact.id, :id => 'current'}, :class => 'icon icon-user') if (User.current.admin? && @contact.redmine_user.blank? && !@contact.email.blank?) %>
+	<%= link_to_if_authorized l(:label_crm_send_mail), {:controller => 'contacts', :action => 'edit_mails', :ids => [@contact.id], :project_id => @project}, :class => 'icon icon-email' unless @contact.primary_email.blank?  %>
+	<%= watcher_link(@contact, User.current) %>
+	<%= link_to l(:button_edit), {:controller => 'contacts', :action => 'edit', :project_id => @project, :id => @contact}, :class => 'icon icon-edit' if @contact.editable? %>
+	<%= link_to l(:button_delete), {:controller => 'contacts', :action => 'destroy', :project_id => @project, :id => @contact}, :data => {:confirm => l(:text_are_you_sure)}, :method => :delete, :class => 'icon icon-del' if @contact.deletable? %>
+	<%= call_hook(:view_contacts_after_actions, :contact => @contact, :project => @project) %>
+</div>
+
+<h2><%= !@contact.is_company ? l(:label_contact) : l(:label_crm_company) %> #<%= @contact.id %></h2>
+
+<div class="contact details<%= ' private' if @contact.is_private? %>">
+	<table class="subject_header">
+		<tr>
+			<td class="avatar"><%= avatar_to(@contact, :size => "64", :full_size => true) %></td>
+			<td class="name" style="vertical-align: top;">
+				<h1><%= h @contact.name %></h1>
+				<% if !@contact.is_company %>
+				<p>
+				<%= h @contact.job_title %>
+				<%= " #{l(:label_crm_at_company)} " unless (@contact.job_title.blank? or @contact.company.blank?) %>
+				<% if @contact.contact_company %>
+					<%= link_to @contact.contact_company.name, {:controller => 'contacts', :action => 'show', :project_id => @contact.contact_company.project(@project), :id => @contact.contact_company.id } %>
+				<% else %>
+					<%= h @contact.company %>
+				<% end %>
+				</p>
+				<% end %>
+
+				<%= render :partial => 'form_tags', :object => @contact.tags, :locals => {:editable => true} %>
+
+			</td>
+			<% if @contact.phones.any? || @contact.emails.any? %>
+			<td class="subject_info">
+				<ul>
+					<% if @contact.phones.any? %>
+					<li class="phone icon icon-phone"><%=  @contact.phones.first %></li>
+					<% end %>
+
+					<% if @contact.emails.any? %>
+					<li class="email icon icon-email"><%= mail_to @contact.emails.first %></li>
+					<% end %>
+				</ul>
+			</td>
+			<% end %>
+		</tr>
+	</table>
+	<%= call_hook(:view_contacts_show_details_bottom, :contact => @contact) %>
+</div>
+
+<%= render_contact_tabs contact_tabs(@contact) %>
+
+<% content_for :sidebar do %>
+	<%= render :partial => 'attributes' %>
+	<%= call_hook(:view_contacts_sidebar_after_attributes, :contact => @contact) %>
+	<%= render partial: 'common/related_issues', locals: {contact: @contact, issues: @contact_issues.sort_by { |a| a.closed? ? 1 : 0}} %>
+	<%= call_hook(:view_contacts_sidebar_after_tasks, :contact => @contact) %>
+	<%= render partial: 'contacts_deals/deals', locals: {contact: @contact, issues: @contact_deals } %>
+	<%= render partial: 'common/notes_attachments', object: @contact.notes_attachments, locals: { container: @contact } %>
+	<%= call_hook(:view_contacts_sidebar_after_notes_attachments, :contact => @contact) %>
+
+		<h3><%= l(:label_crm_background_info) %></h3>
+		
+	<table class="contact sidebar attributes vcard">
+
+	<%= call_hook(:view_contacts_sidebar_attributes_top) %>
+
+	<% if @contact.telegram.present? %>
+		<tr><th class = "name"><%= l(:field_contact_telegram)%>:</th><td class="name fn"><a href=<%= @contact.telegram %>> <%= h @contact.telegram %> </a></td></tr>
+	<% end %>
+
+	<% if @contact.linkedin.present? %>
+	<tr><th class = "name"><%= l(:field_contact_linkedin)%>:</th><td class="name fn"><a href=<%= @contact.linkedin %>> <%= h @contact.linkedin %> </a></td></tr>
+	<% end %>
+
+	<% if @contact.salary.present? %>
+	<tr><th class = "job_title"><%=l(:field_contact_salary)%>:</th><td class="job_title title"><%= h @contact.salary %></td></tr>
+	<% end %>
+	
+	<% if @contact.vacation.present? %>
+	<tr><th class = "name"><%= l(:field_contact_vacation) %>:</th><td class="name fn <%= "org" if @contact.vacation %>"><%= h @contact.vacation %></td></tr>
+	<% end %>
+
+	<% if @contact.work_with_vpn.present? %>
+	<tr><th class = "job_title"><%= l(:field_contact_work_with_vpn) %>:</th><td class="job_title title"><%= h @contact.work_with_vpn %></td></tr>
+	<% end %>
+
+	<% if @contact.english.present? %>
+	<tr><th class = "company"><%=l(:field_contact_english)%>:</th><td class="company org"><%= h @contact.english %></td></tr>
+	<% end %>
+
+	<% if @contact.relocation.present? %>
+	<tr><th class = "name"><%=l(:field_contact_relocation)%>:</th><td class="name fn"><%= h @contact.relocation %></td></tr>
+	<% end %>
+
+	<% if @contact.readiness_to_start_work.present? %>
+	<tr><th class = "job_title"><%=l(:field_contact_readiness_to_start_work)%>:</th><td class="job_title title"><%= h @contact.readiness_to_start_work %></td></tr>
+	<% end %>
+	
+	<% if @contact.type_of_employment.present? %>
+	<tr><th class = "name"><%= l(:field_contact_type_of_employment) %>:</th><td class="name fn <%= "org" if @contact.type_of_employment %>"><%= h @contact.type_of_employment %></td></tr>
+	<% end %>
+
+	<% if @contact.availability_of_equipment.present? %>
+	<tr><th class = "job_title"><%= l(:field_contact_availability_of_equipment) %>:</th><td class="job_title title"><%= h @contact.availability_of_equipment %></td></tr>
+	<% end %>
+
+	<% if @contact.background.present? %>
+	<tr><th class = "company"><%=l(:label_add_information)%>:</th><td class="company org"><%= h @contact.background %></td></tr>
+	<% end %>
+
+	</table>
+
+
+  <div id="contact_projects">
+	 <%= render :partial => 'contacts_projects/related' %>
+  </div>
+
+<% end %>
+
+<% content_for :header_tags do %>
+	<%= javascript_include_tag :contacts, :plugin => 'redmine_contacts'  %>
+	<%= auto_discovery_link_tag(:atom, {:format => 'atom', :key => User.current.rss_key}, :title => "#{@contact.name} - ##{@contact.id}") %>
+
+<% end %>

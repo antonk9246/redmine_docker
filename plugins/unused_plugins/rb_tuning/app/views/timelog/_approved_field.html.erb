@@ -1,0 +1,10 @@
+<p>
+  <% unless form.object.new_record? %>
+    <%= content_tag(:label, l(:approved)) %>
+    <% if project.permission_approve_time? %>
+      <%= form.check_box :approve %>
+    <% else %>
+      <%= form.check_box :approve, disabled: true %>
+    <% end %>
+  <% end %>
+</p>

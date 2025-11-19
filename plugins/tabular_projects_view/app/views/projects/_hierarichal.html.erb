@@ -1,0 +1,15 @@
+<div class="autoscroll easy-tree">
+  <%= render_project_hierarchy_without_description(@projects) %>
+</div>
+
+<script type="text/javascript">
+  function init() {
+    $('.easy-tree').EasyTree({
+        addable: false,
+        editable: false,
+        deletable: false,
+        selectable: false
+    });
+  }
+  window.onload = init();
+</script>

@@ -1,0 +1,2 @@
+<p style='display: none;'><%= form.select :enum_priority_id, ProjectPriority.sorted.map { |pr| [pr.name, pr.id.to_s] }, required: true %></p>
+<p style='display: none;'><%= form.select :enum_status_id, ProjectStatus.sorted.map { |pr| [pr.name, pr.id.to_s] }, required: true %></p>

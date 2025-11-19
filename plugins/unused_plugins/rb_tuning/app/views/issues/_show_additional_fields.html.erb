@@ -1,0 +1,13 @@
+<p>
+  <%= issue_fields_rows do |rows|
+    unless @issue.disabled_core_fields.include?('additional_time')
+      rows.left l(:additional_time), @issue.additional_time, :class => 'additional_time'
+    end
+    unless @issue.disabled_core_fields.include?('planned_date')
+      rows.left l(:planned_date), format_date(@issue.planned_date), :class => 'planned_date'
+    end
+    unless @issue.disabled_core_fields.include?('deadline_changed')
+      rows.left l(:deadline_changed), format_time(@issue.deadline_changed), :class => 'deadline_changed'
+    end
+  end %>
+</p>

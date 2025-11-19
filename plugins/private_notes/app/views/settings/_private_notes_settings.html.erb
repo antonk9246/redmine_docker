@@ -1,0 +1,9 @@
+<h3><%= l('private_notes_settings_header') %></h3>
+<ul style="list-style: none;"">
+  <% Role.all.each do |role| %>
+    <li>
+      <%= check_box_tag "settings[#{role.name}]", true, @settings[role.name] %>
+      <%= role.name %>
+    </li>
+  <% end %>
+</ul>

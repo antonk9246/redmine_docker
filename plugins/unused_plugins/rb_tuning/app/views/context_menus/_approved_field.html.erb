@@ -1,0 +1,12 @@
+<% unless self.assigns['projects'].map(&:permission_approve_time?).include?(false) %>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:approved) %></a>
+    <ul>
+      <% [l(:filter_approve_false), l(:filter_approve_true)].each_with_index do |u,i| -%>
+        <li><%= context_menu_link u, {:controller => 'timelog', :action => 'bulk_update', :ids => @time_entries.collect(&:id), :time_entry => {'approve' => i}, :back_url => @back},
+                                  :selected => (@time_entry && i == (@time_entry.approve == true ? 1 : 0) ), :method => :post %>
+        </li>
+      <% end -%>
+    </ul>
+  </li>
+<% end %>

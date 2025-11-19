@@ -1,0 +1,58 @@
+
+<%= form_tag({}, :data => {:cm_url => projects_context_menu_path}) do -%>
+  <%= hidden_field_tag 'back_url', url_for(:params => request.query_parameters), :id => nil %>
+    <div class="autoscroll">
+      <table class="list projects">
+        <thead>
+          <tr>
+            <th class="checkbox hidden"></th>
+            <% query.columns.each do |column| %>
+              <%= column_header(query, column) %>
+            <% end %>
+            <th class="buttons"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% project_tree(@projects) do |project, level| %>
+              <tr id="project-<%= project.id %>" class="hascontextmenu <%= cycle('odd', 'even') %> <%= project.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %> <%= child_row_classes(project,@projects) %> ">
+                <td class="checkbox hidden">
+                  <span style="display: none;"><%= check_box_tag("ids[]", project.id, false, :id => nil) %></span>
+                </td>
+                <% query.columns.map do |column| %>
+                  <% if column.name.eql?(:name) %>
+                    <td class="arrow <%= column.css_classes %>">
+                      <%= toggle_project_arrows(project.id) if project.allowed_children(@projects).any? %>
+                      <%= project_column_content(column, project) %></td>
+                  <% else %>
+                    <td class="<%= column.css_classes %>" width="<%= column.name.eql?(:description) ? 300 : 200 %>"><%= project_column_content(column, project) %></td>
+                  <% end %>
+                <% end %>
+                <td class="buttons"><%= link_to l(:button_view), settings_project_path(project) if User.current.allowed_to?(:manage_projects, @project, :global => true) %><%#= link_to_context_menu %></td>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+<% end -%>
+<span class="pagination"><%= pagination_links_full @project_pages, @project_count %></span>
+
+<script type="text/javascript">
+    $("[id^=parent-project]").on('click', function(){
+        parentId = $(this).attr('id').split('-')[2];
+        if($(this).hasClass('expand-row')){
+            $(this).removeClass('expand-row');
+            $(this).addClass('collapse-row');
+
+            $(".child-project-"+parentId).addClass('hidden')
+            $(".child-project-"+parentId+" .arrow span").removeClass('expand-row');
+            $(".child-project-"+parentId+" .arrow span").addClass('collapse-row');
+        }else{
+            $(this).removeClass('collapse-row');
+            $(this).addClass('expand-row');
+
+            $(".child-project-"+parentId).removeClass('hidden')
+            $(".child-project-"+parentId+" .arrow span").removeClass('collapse-row');
+            $(".child-project-"+parentId+" .arrow span").addClass('expand-row');
+        }
+    });
+</script>

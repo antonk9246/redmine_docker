@@ -1,0 +1,1 @@
+match '*path', :to => 'cors#preflight', :constraints => {:method => 'OPTIONS'}, :via => :OPTIONS

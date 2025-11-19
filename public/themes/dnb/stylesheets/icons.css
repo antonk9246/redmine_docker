@@ -1,0 +1,571 @@
+.query-columns .buttons input[value="→"] {
+  background-image: url(/images/svg_icons/arrow_forward.svg);
+}
+
+.query-columns .buttons input[value="←"] {
+  background-image: url(/images/svg_icons/arrow_forward.svg);
+  transform: rotate(180deg);
+}
+
+.query-columns .buttons input[value="⇈"] {
+  background-image: url(/images/svg_icons/arrow_upper.svg);
+}
+
+.query-columns .buttons input[value="⇊"] {
+  background-image: url(/images/svg_icons/arrow_upper.svg);
+  transform: rotate(180deg);
+}
+
+.query-columns .buttons input[value="↑"] {
+  background-image: url(/images/svg_icons/arrow_up.svg);
+}
+
+.query-columns .buttons input[value="↓"] {
+  background-image: url(/images/svg_icons/arrow_down.svg);
+}
+
+/* ============================================== ICONS ==================================================== */
+
+.icon {
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
+}
+.icon-only {
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 16px;
+  display: inline-block;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 8px;
+  vertical-align: middle;
+}
+.icon-only::after {
+  content: "\a0";
+}
+.icon-add {
+  background-image: url(/images/svg_icons/add_blue.svg);
+}
+.icon-add-white {
+  background-image: url(/images/svg_icons/add_white.svg);
+}
+.icon-edit {
+  background-image: url(/images/svg_icons/edit.svg);
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.icon-copy {
+  background-image: url(/images/svg_icons/copy.svg);
+}
+.icon-duplicate {
+  background-image: url(/images/svg_icons/duplicate.svg);
+}
+.icon-add-deal,
+.icon-money-dollar {
+  background-image: url(/images/svg_icons/money_green.svg) !important;
+  background-size: 16px;
+  background-repeat: no-repeat;
+}
+.icon-del,
+.icon-link-break {
+  background-image: url(/images/svg_icons/delete.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 18px;
+}
+.icon-move {
+  background-image: url(/images/svg_icons/move.svg) !important;
+}
+.icon-save {
+  background-image: url(/images/svg_icons/save_blue.svg);
+}
+.icon-download {
+  background-image: url(/images/svg_icons/download_new.svg);
+}
+.icon-cancel {
+  background-image: url(/images/svg_icons/cancel.svg);
+}
+.icon-multiple {
+  background-image: url(/images/svg_icons/table_multiple.svg);
+}
+.icon-folder {
+  background-image: url(/images/svg_icons/folder.svg);
+}
+.open .icon-folder {
+  background-image: url(/images/svg_icons/folder_open.svg);
+}
+.icon-package {
+  background-image: url(/images/svg_icons/package.svg);
+}
+.icon-user {
+  background-image: url(/images/svg_icons/user.svg);
+}
+.icon-user-blue {
+  background-image: url(/images/svg_icons/user-blue.svg);
+}
+.icon-project,
+.icon-projects {
+  background-image: url(/images/svg_icons/projects.svg);
+}
+.icon-help {
+  background-image: url(/images/svg_icons/help.svg);
+}
+.icon-attachment {
+  background-image: url(/images/svg_icons/attachment.svg);
+}
+.icon-history {
+  background-image: url(/images/svg_icons/history.svg);
+}
+.icon-time-entry,
+.icon-time {
+  background-image: url(/images/svg_icons/time.svg);
+}
+#time-logger-menu .icon-time {
+  background-image: url(/images/svg_icons/time_white.svg);
+}
+.icon-time-add,
+.icon-start {
+  background-image: url(/images/svg_icons/time_add.svg) !important;
+}
+.icon-stats {
+  background-image: url(/images/svg_icons/stats.svg);
+}
+.icon-warning {
+  background-image: url(/images/svg_icons/warning.svg);
+}
+.icon-error {
+  background-image: url(/images/svg_icons/exclamation.svg);
+}
+.icon-fav {
+  background-image: url(/images/svg_icons/fav.svg);
+}
+.icon-fav-off {
+  background-image: url(/images/svg_icons/fav_off.svg) !important;
+  background-position-x: -2px;
+  background-size: 20px;
+}
+.icon-company-contact {
+  background-image: url(/images/svg_icons/add_contact.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.icon-reload {
+  background-image: url(/images/svg_icons/reload.svg);
+}
+.icon-lock,
+.icon-locked {
+  background-image: url(/images/svg_icons/locked.svg);
+}
+.icon-unlock {
+  background-image: url(/images/svg_icons/unlock.svg);
+}
+.icon-checked,
+#context-menu a.icon-checked {
+  background-image: url(/images/svg_icons/toggle_check.svg) !important;
+  background-size: 16px !important;
+}
+.icon-report {
+  background-image: url(/images/svg_icons/report.svg);
+}
+.icon-comment,
+.icon-comments {
+  background-image: url(/images/svg_icons/comment.svg);
+}
+.icon-summary {
+  background-image: url(/images/svg_icons/lightning.svg);
+}
+.icon-server-authentication {
+  background-image: url(/images/svg_icons/server_key.svg);
+}
+.icon-zoom-in {
+  background-image: url(/images/svg_icons/zoom_in.svg);
+}
+.icon-zoom-out {
+  background-image: url(/images/svg_icons/zoom_out.svg);
+}
+.icon-magnifier {
+  background-image: url(/images/svg_icons/magnifier.svg);
+}
+
+input.autocomplete {
+  background-image: url(/images/svg_icons/magnifier.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.icon-passwd {
+  background-image: url(/images/svg_icons/textfield_key.svg);
+}
+.icon-arrow-right,
+.icon-test,
+.icon-sticky {
+  background-image: url(/images/svg_icons/bullet_go.svg);
+}
+.icon-email {
+  background-image: url(/images/svg_icons/email.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.icon-phone {
+  background-image: url(/images/svg_icons/phone.svg) !important;
+}
+.icon-email-disabled {
+  background-image: url(/images/svg_icons/email_disabled.svg);
+}
+.icon-email-add {
+  background-image: url(/images/svg_icons/email_add.svg);
+}
+.icon-ok {
+  background-image: url(/images/svg_icons/true.svg);
+}
+.icon-not-ok {
+  background-image: url(/images/svg_icons/false.svg);
+}
+.icon-link-break {
+  background-image: url(/images/svg_icons/link_crashed.svg);
+}
+.icon-list {
+  background-image: url(/images/svg_icons/text_list_bullets.svg);
+}
+.icon-fullscreen {
+  background-image: url(/images/svg_icons/fullscreen.svg) !important;
+}
+.icon-close {
+  background-image: url(/images/svg_icons/close.svg);
+}
+.icon-close:hover {
+  background-image: url(/images/svg_icons/close_hl.svg);
+}
+.icon-settings {
+  background-image: url(/images/svg_icons/changeset.svg);
+}
+.icon-group,
+.icon-groupnonmember,
+.icon-groupanonymous {
+  background-image: url(/images/svg_icons/group.svg);
+}
+.icon-roles {
+  background-image: url(/images/svg_icons/database_key.svg);
+}
+
+.icon-issue {
+  background-image: url(/images/svg_icons/ticket.svg);
+}
+.icon-issue-edit {
+  background-image: url(/images/svg_icons/issue_status.svg);
+}
+.icon-workflows {
+  background-image: url(/images/svg_icons/workflow.svg) !important;
+}
+
+.icon-custom-fields {
+  background-image: url(/images/svg_icons/textfield.svg);
+}
+.icon-plugins {
+  background-image: url(/images/svg_icons/plugin.svg);
+}
+.icon-news {
+  background-image: url(/images/svg_icons/news.svg);
+}
+.icon-changeset {
+  background-image: url(/images/svg_icons/changeset.svg);
+}
+.icon-message {
+  background-image: url(/images/svg_icons/message.svg);
+}
+.icon-reply {
+  background-image: url(/images/svg_icons/comments.svg);
+}
+.icon-wiki-page {
+  background-image: url(/images/svg_icons/wiki_edit.svg);
+}
+.icon-document {
+  background-image: url(/images/svg_icons/document.svg);
+}
+.icon-project {
+  background-image: url(/images/svg_icons/projects.svg);
+}
+.icon-add-bullet {
+  background-image: url(/images/svg_icons/add.svg);
+}
+.icon-shared {
+  background-image: url(/images/svg_icons/link.svg);
+}
+.icon-actions,
+.js-contextmenu {
+  background-image: url(/images/svg_icons/3_bullets.svg);
+}
+.icon-sort-handle {
+  background-image: url(/images/svg_icons/reorder.svg);
+}
+.icon-expended {
+  background-image: url(/images/svg_icons/arrow_down.svg);
+}
+.icon-collapsed {
+  background-image: url(/images/svg_icons/arrow_right.svg);
+}
+.icon-collapsed-new {
+  background-image: url(/images/svg_icons/arrow_up.svg);
+}
+
+.gantt_subjects div > span.expander {
+  padding-left: 16px;
+}
+
+.icon-bookmark {
+  background-image: url(/images/svg_icons/tag_blue_delete.svg);
+}
+.icon-bookmark-off {
+  background-image: url(/images/svg_icons/tag_blue_add.svg);
+}
+.icon-sorted-asc {
+  background-image: url(/images/svg_icons/sort_down.svg) !important;
+  background-size: 24px;
+}
+.icon-sorted-desc {
+  background-image: url(/images/svg_icons/sort_up.svg) !important;
+  background-size: 24px;
+}
+a.sort {
+  padding-right: 24px;
+}
+
+tr.issue.idnt td.subject,
+tr.project.idnt td.name {
+  background-image: url(/images/svg_icons/arrow_right.svg);
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.icon-toggle-plus {
+  background-image: url(/images/svg_icons/bullet_toggle_plus.svg);
+}
+.icon-toggle-minus {
+  background-image: url(/images/svg_icons/bullet_toggle_minus.svg);
+}
+.icon-clear-query {
+  background-image: url(/images/svg_icons/close_hl.svg);
+}
+.icon-import {
+  background-image: url(/images/svg_icons/import.svg) !important;
+}
+.icon-contact {
+  background-image: url(/images/svg_icons/contacts.svg) !important;
+}
+.icon-hide {
+  background-image: url(/images/svg_icons/visibility_off.svg) !important;
+}
+.icon-reveal {
+  background-image: url(/images/svg_icons/visibility.svg) !important;
+}
+.icon-issue-note {
+  background-image: url(/images/svg_icons/ticket_note.svg) !important;
+}
+.icon-issue-closed {
+  background-image: url(/images/svg_icons/ticket_checked.svg) !important;
+}
+.popular {
+  background-image: url(/images/svg_icons/popular.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.recently-changed {
+  background-image: url(/images/svg_icons/recent.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.normal {
+  background-image: url(/images/svg_icons/document.svg) !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+#quick-search label a {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: top;
+  background-image: url(/images/svg_icons/search_white.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  font-size: 0px !important;
+  margin: 1px 2px 0px 0px;
+}
+
+#quick-search label {
+  font-size: 0px;
+}
+
+.drdn-content {
+  z-index: 10;
+}
+
+.article-icon {
+  padding: 6px 0 6px 30px !important;
+}
+
+a.xls {
+  background-image: url(/images/svg_icons/excel_fast.svg) !important;
+  background-size: 16px !important;
+  background-repeat: no-repeat;
+  padding: 2px 0px 3px 20px;
+}
+
+a.xlse {
+  background-image: url(/images/svg_icons/excel_stack.svg) !important;
+  background-size: 16px !important;
+  background-repeat: no-repeat;
+  padding: 2px 0px 3px 20px;
+}
+
+a.icon-take {
+  background-image: url(/images/svg_icons/hand.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+a.icon-give {
+  background-image: url(/images/svg_icons/return.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+a.icon-give_instead_user {
+  background-image: url(/images/svg_icons/return.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+table.cal .starting a.issue,
+p.cal.legend .starting {
+  background-image: url(/images/svg_icons/bullet_go.svg) !important;
+  background-size: 16px;
+}
+table.cal .ending a.issue,
+p.cal.legend .ending {
+  background-image: url(/images/svg_icons/bullet_end.svg) !important;
+  background-size: 16px;
+}
+table.cal .starting.ending a.issue,
+p.cal.legend .starting.ending {
+  background-image: url(/images/svg_icons/bullet_square.svg) !important;
+  background-size: 16px;
+}
+
+select {
+  width: fit-content;
+  height: 48px;
+  background-image: url(/images/svg_icons/arrow_down.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  margin-top: -2px;
+  background-position-x: calc(100% - 12px);
+  padding-right: 32px;
+}
+
+.quick-edit-card .add-comment {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url(/images/svg_icons/comment.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.quick-edit-card .add-comment img {
+  display: none;
+}
+
+#admin-menu a.agile {
+  background-image: url(/images/svg_icons/agile.svg) !important;
+}
+#admin-menu a.people {
+  background-image: url(/images/svg_icons/user_suit.svg) !important;
+}
+#admin-menu a.contacts {
+  background-image: url(/images/svg_icons/contacts.svg) !important;
+}
+#admin-menu a.books {
+  background-image: url(/images/svg_icons/books.svg) !important;
+}
+
+a.atom {
+  background-image: url(/images/svg_icons/feed.svg) !important;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding: 2px 0px 3px 20px;
+}
+
+/* ========================================== MARKERS =============================================== */
+
+.task_late {
+  background-image: url(/images/svg_icons/task_late.svg);
+}
+.task_done {
+  background-image: url(/images/svg_icons/task_done.svg);
+}
+.task_todo {
+  background-image: url(/images/svg_icons/task_todo.svg);
+}
+
+.task.parent.marker.starting {
+  position: absolute;
+  background: url(../images/task_parent_end.png) no-repeat 0 0;
+  width: 8px;
+  height: 16px;
+  margin-left: -4px;
+  left: 0px;
+  top: -1px;
+}
+.task.parent.marker.ending {
+  position: absolute;
+  background: url(../images/task_parent_end.png) no-repeat 0 0;
+  width: 8px;
+  height: 16px;
+  margin-left: -4px;
+  right: 0px;
+  top: -1px;
+}
+
+.version.task_late {
+  background-image: url(/images/svg_icons/milestone_late.svg);
+}
+.version.task_done {
+  background-image: url(/images/svg_icons/milestone_done.svg);
+}
+.version.task_todo {
+  background-image: url(/images/svg_icons/milestone_todo.svg);
+}
+
+.version.marker {
+  background-image: url(../images/version_marker.png);
+  background-repeat: no-repeat;
+  border: 0;
+  margin-left: -4px;
+  margin-top: 1px;
+}
+
+.project.task_late {
+  background-image: url(/images/svg_icons/milestone_late.svg);
+}
+.project.task_done {
+  background-image: url(/images/svg_icons/milestone_done.svg);
+}
+.project.task_todo {
+  background-image: url(/images/svg_icons/milestone_todo.svg);
+}
+
+.project.marker {
+  background-image: url(../images/project_marker.png);
+  background-repeat: no-repeat;
+  border: 0;
+  margin-left: -4px;
+  margin-top: 1px;
+}
+
+.icon-watch {
+  background-image: url(/images/svg_icons/visibility.svg);
+}

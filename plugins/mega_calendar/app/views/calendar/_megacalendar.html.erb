@@ -1,0 +1,385 @@
+<%
+  if use_values_from_session
+    js_default_date = session[:mega_calendar_js_default_date]
+    js_user_query = session[:mega_calendar_js_user_query]
+  else
+    js_default_date = Date.today.to_s
+    js_user_query = true
+  end
+  if js_user_query.nil?
+    js_user_query = true
+    session[:mega_calendar_js_user_query] = js_user_query
+  end
+  if js_default_date.nil?
+    js_default_date = Date.today.to_s
+    session[:mega_calendar_js_default_date] = js_default_date
+  end
+%>
+
+<%= stylesheet_link_tag :"mega_calendar.css", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"fullcalendar-6.1.9/dist/index.global.min.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"fullcalendar-6.1.9/packages/core/locales-all.global.min.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"moment-with-locales.js", :plugin => 'mega_calendar' %>
+<%= javascript_include_tag :"jquery-serialize-object.min.js", :plugin => 'mega_calendar' %>
+<h2><%= translate 'calendar' %></h2>
+<%= render :partial => 'calendar/filter_panel', :locals => {} %>
+<center><div id='mega_calendar__calendar'" style="<%= calendar_style %>"></div></center>
+
+<%
+  js_locale = User.current.language  rescue nil
+  if js_locale.blank?
+    js_locale = Setting.default_language
+  end
+%>
+
+<script type="text/javascript">
+  var user_query = (function() {
+    const saved = localStorage.getItem("mega_calendar_user_query");
+    return saved === null ? <%= js_user_query.to_s %> : (saved === "true");
+  })();
+
+  function set_active_button(user) {
+    var btn_mytickets = $('.fc-myTickets-button');
+    var btn_alltickets = $('.fc-allTickets-button');
+    if(user === true) {
+      btn_mytickets.addClass('fc-button-active');
+      btn_alltickets.removeClass('fc-button-active');
+    } else {
+      btn_mytickets.removeClass('fc-button-active');
+      btn_alltickets.addClass('fc-button-active');
+    }
+  }
+  $(document).ready(function() {
+    var calendarEl = document.getElementById('mega_calendar__calendar');
+
+    window.calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: localStorage.getItem("mega_calendar_view") || '<%= default_view %>',
+      initialDate: localStorage.getItem("mega_calendar_current_date") || '<%= js_default_date %>',
+      locale: '<%= js_locale %>',
+      selectable: true,
+      editable: true,
+      eventDurationEditable: true,
+      eventOverlap: true,
+      height: <%= calendar_height %>,
+      displayEventEnd: true,
+      dayMaxEventRows: true,
+      eventDisplay: 'block',
+      firstDay: <%= (Setting.plugin_mega_calendar['week_start'].blank? ? '1' : Setting.plugin_mega_calendar['week_start'].to_s ) %>,
+      customButtons: {
+        myTickets: {
+          text: '<%= translate 'my_issues' %>',
+          click: function() {
+            user_query = true;
+            localStorage.setItem("mega_calendar_user_query", "true");
+            set_active_button(user_query);
+            calendar.refetchEvents();
+          }
+        },
+        allTickets: {
+          text: '<%= translate 'all_issues' %>',
+          click: function() {
+            user_query = false;
+            localStorage.setItem("mega_calendar_user_query", "false");
+            set_active_button(user_query);
+            calendar.refetchEvents();
+          }
+        }
+      },
+      headerToolbar: {
+        left: '<%= (show_view_buttons == false ? '' : 'prev,next today ') %>allTickets,myTickets',
+        center: 'title',
+        right: '<%= (show_view_buttons == false ? '' : 'dayGridMonth,timeGridWeek,timeGridDay') %>'
+      },
+      eventSources: [
+        {
+          url: '<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/get_events',
+          extraParams:  function() {
+            return {
+              // start: start.format("YYYY-MM-DD HH:MM"),
+              // end: end.format("YYYY-MM-DD HH:MM"),
+              user: user_query,
+              save_values: <%= use_values_from_session %>,
+              filter: JSON.stringify($('#calendar_filter').serializeObject()["filter"])
+            };
+          }
+        }
+      ],
+      eventDidMount: function(info) {
+  const title = info.event.title;
+  const desc = info.event.extendedProps.description || "";
+  
+  // Создаем HTML тултипа с возможностью клика по ссылкам
+  const fullTooltip = `
+    <div class="event-tooltip-content">
+      <strong>${title}</strong>
+      ${desc ? `<div>${desc}</div>` : ''}
+    </div>
+  `;
+  
+  let tooltip = null;
+  let tooltipTimeout = null;
+  let isHoveringTooltip = false;
+
+  $(info.el).hover(
+    function(event) {
+      // Отменяем предыдущий таймер
+      if (tooltipTimeout) {
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = null;
+      }
+      
+      // Если тултип уже существует, просто показываем его
+      if (tooltip && tooltip.is(':visible')) {
+        return;
+      }
+      
+      // Создаем новый тултип
+      tooltip = $('<div class="event-tooltip"></div>').html(fullTooltip);
+      $('body').append(tooltip);
+      
+      // Позиционируем
+      const tooltipWidth = tooltip.outerWidth();
+      const tooltipHeight = tooltip.outerHeight();
+      const viewportWidth = $(window).width();
+      
+      let left = event.pageX + 10;
+      let top = event.pageY + 10;
+      
+      // Проверяем, чтобы не выходил за правый край
+      if (left + tooltipWidth > viewportWidth) {
+        left = event.pageX - tooltipWidth - 10;
+      }
+      
+      tooltip.css({
+        top: top,
+        left: left,
+        opacity: 0
+      }).show().animate({opacity: 1}, 200);
+      
+      // Автоскрытие через 2 секунды (увеличил время)
+      tooltipTimeout = setTimeout(function() {
+        if (tooltip && !isHoveringTooltip) {
+          hideTooltip();
+        }
+      }, 2000);
+      
+      // Обработчики для самого тултипа
+      tooltip.hover(
+        function() {
+          // При наведении на тултип - отменяем скрытие
+          isHoveringTooltip = true;
+          if (tooltipTimeout) {
+            clearTimeout(tooltipTimeout);
+            tooltipTimeout = null;
+          }
+        },
+        function() {
+          // При уходе с тултипа - скрываем через 0.5 секунды
+          isHoveringTooltip = false;
+          tooltipTimeout = setTimeout(hideTooltip, 500);
+        }
+      );
+      
+      // Закрытие при клике вне тултипа
+      $(document).on('click.tooltipClose', function(e) {
+        if (tooltip && !tooltip.is(e.target) && tooltip.has(e.target).length === 0) {
+          hideTooltip();
+        }
+      });
+    },
+    function() {
+      // При уходе с события - скрываем через 0.5 секунды, если не наведены на тултип
+      if (!isHoveringTooltip) {
+        tooltipTimeout = setTimeout(hideTooltip, 500);
+      }
+    }
+  );
+  
+  function hideTooltip() {
+    if (tooltipTimeout) {
+      clearTimeout(tooltipTimeout);
+      tooltipTimeout = null;
+    }
+    if (tooltip) {
+      tooltip.animate({opacity: 0}, 200, function() {
+        $(this).remove();
+      });
+      tooltip = null;
+    }
+    isHoveringTooltip = false;
+    $(document).off('click.tooltipClose');
+  }
+},
+      select: function(info) {
+        calendar.unselect();
+        window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>issues/new?issue[start_date]='+moment(info.start).format("YYYY-MM-DD")+'&issue[due_date]='+moment(info.end).format("YYYY-MM-DD")+'&issue[time_begin]='+moment(info.start).format("HH:mm")+'&issue[time_end]='+moment(info.end).format("HH:mm"), '_blank');
+      },
+      eventResize: function(info) {
+        $('.ui-tooltip').remove();
+        if(!confirm("<%= (translate 'save_question') %>")) {
+          info.revert();
+        } else {
+          $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + info.event.extendedProps.controller_name, { id: info.event.id, event_begin: moment(info.event.start).format("YYYY-MM-DD HH:mm"), event_end: moment(info.event.end).format("YYYY-MM-DD HH:mm") });
+        }
+      },
+      eventDrop: function(info) {
+        $('.ui-tooltip').remove();
+        if(!confirm("<%= (translate 'save_question') %>")) {
+          info.revert();
+        } else {
+          var event_begin = moment(info.event.start).format();
+          var event_end = (info.event.end !== null ? moment(info.event.end).format() : null);
+          var allDay = info.event.allDay;
+          $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + info.event.extendedProps.controller_name, { id: info.event.id, event_begin: moment(event_begin).format("YYYY-MM-DD HH:mm"), event_end: moment(event_end).format("YYYY-MM-DD HH:mm"), allDay: allDay });
+        }
+      },
+      viewDidMount: function(view) {
+        localStorage.setItem("mega_calendar_view", view.view.type);
+      },
+      datesSet: function(info) {
+        const date = moment(info.view.currentStart).format("YYYY-MM-DD");
+        localStorage.setItem("mega_calendar_current_date", date);
+      },
+    });
+    calendar.render();
+    load_filter_from_localStorage();
+    set_active_button(user_query);
+  //   $('#mega_calendar__calendar').fullCalendar({
+  //       lang: '<%= js_locale %>',
+  //       defaultView: '<%= default_view %>',
+  //       height: <%= calendar_height %>,
+  //       selectable: true,
+  //       customButtons: {
+  //               myTickets: {
+  //                       text: '<%= translate 'my_issues' %>',
+  //                       click: function() {
+  //                         user_query = true;
+  //                         set_active_button(user_query);
+  //                         $('#calendar').fullCalendar( 'refetchEvents' );
+  //                       }
+  //               },
+  //               allTickets: {
+  //                       text: '<%= translate 'all_issues' %>',
+  //                       click: function() {
+  //                         user_query = false;
+  //                         set_active_button(user_query);
+  //                         $('#calendar').fullCalendar( 'refetchEvents' );
+  //                       }
+  //               }
+
+  //       },
+  //       header: {
+  //                       left: '<%= (show_view_buttons == false ? '' : 'prev,next today ') %>allTickets,myTickets',
+  //                       center: 'title',
+  //                       right: '<%= (show_view_buttons == false ? '' : 'month,agendaWeek,agendaDay') %>'
+  //               },
+  //       displayEventEnd: true,
+  //       defaultDate: '<%= js_default_date %>',
+	// firstDay: <%= (Setting.plugin_mega_calendar['week_start'].blank? ? '1' : Setting.plugin_mega_calendar['week_start'].to_s ) %>,
+  //       events: function(start, end, timezone, callback) {
+  //         $.ajax({
+  //           url: '<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/get_events',
+  //           dataType: 'json',
+  //           data: {
+  //             start: start.format("YYYY-MM-DD HH:MM"),
+  //             end: end.format("YYYY-MM-DD HH:MM"),
+  //             user: user_query,
+  //             save_values: <%= use_values_from_session %>,
+  //             filter: $('#calendar_filter').serializeObject()["filter"]
+  //           },
+  //           success: function(doc) {
+  //             var events = [];
+  //             $(doc).each(function() { events.push(this); });
+  //             callback(events);
+  //           }
+  //       });
+  //     },
+  //     eventRender: function(event, element) {
+  //         // element.qtip({ content: event.description, position: { target: 'mouse', adjust: { x: 5, y: 5}} });
+  //     },
+  //     eventLimit: true,
+  //     editable: true,
+  //     eventDrop: function(event, delta, revertFunc) {
+  //       if(!confirm("<%= (translate 'save_question') %>")) {
+  //         revertFunc();
+  //       } else {
+  //         var event_begin = event.start.format();
+  //         var event_end = (event.end !== null ? event.end.format() : null);
+  //         var allDay = event.allDay;
+  //         $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + event.controller_name, { id: event.id, event_begin: event_begin, event_end: event_end, allDay: allDay });
+  //       }
+  //     },
+  //     eventResize: function(event, delta, revertFunc) {
+  //       if(!confirm("<%= (translate 'save_question') %>")) {
+  //         revertFunc();
+  //       } else {
+  //         $.get('<%= Setting.plugin_mega_calendar['sub_path'] %>calendar/change_' + event.controller_name, { id: event.id, event_begin: event.start.format(), event_end: event.end.format() });
+  //       }
+  //     },
+  //     select: function(start, end) {
+  //       $('#calendar').fullCalendar('unselect');
+  //       window.open('<%= Setting.plugin_mega_calendar['sub_path'] %>issues/new?issue[start_date]='+start.format("YYYY-MM-DD")+'&issue[due_date]='+end.format("YYYY-MM-DD")+'&issue[time_begin]='+start.format("HH:mm")+'&issue[time_end]='+end.format("HH:mm"), '_blank');
+  //     },
+  //   });
+  });
+</script>
+
+<style>
+  .fc .fc-button-primary {
+    background-color: #486BED;
+    border-color: #486BED;
+    line-height: 14px;
+  }
+  .fc .fc-button-primary:hover {
+    background-color: #3e60df;
+    border-color: #3e60df;
+  }
+  .fc .fc-button-primary:not(:disabled).fc-button-active,
+  .fc .fc-button-primary:not(:disabled):active {
+    background-color: #5879f4;
+    border-color: #5879f4;
+    line-height: 14px;
+  }
+  .fc .fc-button {
+    padding: 0px 8px;
+  }
+  .event-tooltip {
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    z-index: 10000;
+    max-width: 350px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    pointer-events: auto;
+    line-height: 1.4;
+  }
+  
+  .event-tooltip-content strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .event-tooltip-content div {
+    margin-top: 5px;
+    color: #e0e0e0;
+  }
+  
+  .event-tooltip a {
+    color: #4da6ff;
+    text-decoration: underline;
+  }
+  
+  .event-tooltip a:hover {
+    color: #80c1ff;
+  }
+  
+  /* Анимация появления */
+  .event-tooltip {
+    transition: opacity 0.2s ease;
+  }
+</style>

@@ -1,0 +1,15 @@
+# English strings go here for Rails i18n
+en:
+  managers_tracker: Project managers tracker
+  financial_tracker: Financial tasks tracker
+  trackers_must_be_different: Trackers must be different
+  tracker_contains_tasks: Tracker %{name} contains tasks
+  error_parent_task_fin_tracker: Tracker task "%{name}" must not have parent tasks
+  error_parent_task_pm_tracker: The task of the tracker "%{name}" either should not have a parent task, or it should be the task of the tracker "%{name}"
+  error_parent_task_standard_tracker: Parent task with tracker "%{name}" not found for this task
+  error_parent_task_tracker: Unacceptable parental task
+  master_tracker: Master tracker
+  parent_tracker: Parent tracker
+  child_tracker: Child tracker
+  error_time_entry_task_tracker: There is no time charge for a task with such tracker
+  add_tracker_button: Add tracker

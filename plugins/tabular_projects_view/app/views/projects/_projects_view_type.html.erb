@@ -1,0 +1,25 @@
+<div class="mobile-projects-view">
+  <label class="projects-view-type-label"><%= l(:label_view) %></label>
+  <div class="view-type">
+    <select id="projects-view-type" name="projects_view_type">
+      <option value="tabular" class="mobile_table_view"><%= l(:label_table_view) %></option>
+      <option value="hierarichal" class="mobile_hierarichal_view"><%= l(:option_hierarchical_view) %></option>
+    </select>
+  </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        let viewType = "<%= session[:projects_view_type] %>"
+
+        if (viewType === 'hierarichal') {
+            $('#projects-view-type')[0].selectedIndex=1;
+        }
+        else {
+            $('#projects-view-type')[0].selectedIndex=0;
+        }
+
+    })
+</script>

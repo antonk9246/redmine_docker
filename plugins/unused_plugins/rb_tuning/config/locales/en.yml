@@ -1,0 +1,14 @@
+# English strings go here for Rails i18n
+en:
+  additional_time: Additional time
+  planned_date: Planned date
+  deadline_changed: Deadline changed
+  field_additional_time: Additional time
+  field_planned_date: Planned date
+  field_deadline_changed: Deadline changed
+  approved: Approved
+  field_approve: Approved
+  approver_role: Approver role
+  filter_approve_true: True
+  filter_approve_false: False
+  error_record_approved: Record approved. Change is not possible.

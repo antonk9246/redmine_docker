@@ -1,0 +1,13 @@
+ru:
+  additional_time: Дополнительное время
+  planned_date: Плановая дата
+  deadline_changed: Срок изменен
+  field_additional_time: Дополнительное время
+  field_planned_date: Плановая дата
+  field_deadline_changed: Срок изменен
+  approved: Утверждено
+  field_approve: Утверждено
+  approver_role: Approver role
+  filter_approve_true: Да
+  filter_approve_false: Нет
+  error_record_approved: Запись утверждена. Изменение невозможно.

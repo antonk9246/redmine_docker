@@ -1,0 +1,68 @@
+<div id="contact_issues">
+  <% if controller_name == 'contacts' %>
+    <div class="contextual">
+      <%= link_to l(:label_issue_new), {}, :onclick => "$('#add_issue').show(); $('#add_issue_link').hide(); return false;", :id => 'add_issue_link' if User.current.allowed_to?(:add_issues, @project) && User.current.allowed_to?(:manage_contact_issue_relations, @project) %>
+    </div>
+
+    <h3><%= @contact_issues_count > 0 ? link_to("#{l(:label_issue_plural)} (#{@contact_issues_count})", {:controller => 'issues',
+                     :action => 'index',
+                     :set_filter => 1,
+                     :f => [:contacts, :status_id],
+                     :v => {:contacts => [@contact.id]},
+                     :op => {:contacts => '=', :status_id => '*'}}) : "#{l(:label_issue_plural)} (#{@contact_issues_count})" %> </h3>
+
+
+    <%= error_messages_for 'issue' %>
+
+    <% if User.current.allowed_to?(:add_issues, @project) %>
+      <div id="add_issue" style="display:none;">
+         <%= form_tag({ :controller => "contacts_issues", :action => "create_issue", :project_id => @project, :id => contact}, :multipart => true, :id => "add_issue_form") do %>
+
+          <%= render :partial => 'common/contact_issue_attributes' %>
+
+          <%= link_to l(:button_cancel), {}, :onclick => "$('#add_issue').hide(); $('#add_issue_link').show(); return false;"  %>
+
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if issues.any? %>
+      <table style="width:100%">
+        <%= render partial: 'common/issue_item', collection: issues %>
+      </table>
+    <% end %>
+  <% elsif controller_name == 'deals' %>
+    <div class="contextual">
+      <%= link_to l(:label_issue_new), {}, :onclick => "$('#add_issue').show(); $('#add_issue_link').hide(); return false;", :id => 'add_issue_link' if User.current.allowed_to?(:add_issues, @project) %>
+    </div>
+
+    <h3><%= @deal_issues.count > 0 ? link_to("#{l(:label_issue_plural)} (#{@deal_issues.count})", {:controller => 'issues',
+                     :action => 'index',
+                     :set_filter => 1,
+                     :f => [:deal, :status_id],
+                     :v => {:deal => [@deal.id]},
+                     :op => {:deal => '=', :status_id => '*'}}) : "#{l(:label_issue_plural)}" %> </h3>
+
+    <%= error_messages_for 'issue' %>
+
+    <% if User.current.allowed_to?(:add_issues, @project) %>
+      <div id="add_issue" style="display:none;">
+         <%= form_tag({ :controller => "deals_issues", :action => "create_issue", :project_id => @project, :id => deal}, :multipart => true, :id => "add_issue_form") do %>
+
+          <%= render :partial => 'common/contact_issue_attributes' %>
+
+          <%= link_to l(:button_cancel), {}, :onclick => "$('#add_issue').hide(); $('#add_issue_link').show(); return false;"  %>
+
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @deal_issues.any? %>
+      <table style="width:100%">
+        <%= render :partial => 'common/issue_item', :collection => @deal_issues %>
+      </table>
+    <% end %>
+  <% else %>
+    <h3><%= "#{l(:label_crm_related_issues)} (#{issues.count})" %></h3>
+  <% end %>
+</div>

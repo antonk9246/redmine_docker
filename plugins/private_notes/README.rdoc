@@ -1,0 +1,6 @@
+= Private notes plugin
+
+== Install
+
+* Copy private_notes plugin to {RAILS_APP}/plugins on your redmine path
+* Restart your server and that's it!

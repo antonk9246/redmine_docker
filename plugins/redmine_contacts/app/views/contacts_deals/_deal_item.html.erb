@@ -1,0 +1,10 @@
+<tr id=<%="contact_deal_#{deal_item.id}"%>>
+  <td class="issue_item_subject">
+    <p>
+      <%= deal_status_tag(deal_item.status) if deal_item.status %>
+      <%= link_to "#{deal_item.name}", deal_path(deal_item) %> -
+      <%= deal_item.price_to_s %>
+    </p>
+  </td>
+  <td style="vertical-align: top; text-align: right;"><%= format_date(deal_item.due_date) %></td>
+</tr>

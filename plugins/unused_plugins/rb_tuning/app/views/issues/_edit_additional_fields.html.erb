@@ -1,0 +1,19 @@
+<div>
+  <% unless @issue.disabled_core_fields.include?('additional_time') %>
+    <p>
+      <%= form.text_field :additional_time, size: 1 %>
+    </p>
+  <% end %>
+  <% unless @issue.disabled_core_fields.include?('planned_date') %>
+    <p>
+      <%= form.date_field(:planned_date) %>
+      <%= calendar_for('planned_date') %>
+    </p>
+  <% end %>
+  <% unless @issue.disabled_core_fields.include?('deadline_changed') %>
+    <p>
+      <%= content_tag(:label, l(:deadline_changed)) %>
+      <%= text_field :issue, :deadline_changed, :value => format_time(issue.deadline_changed), :disabled => true %>
+    </p>
+  <% end %>
+</div>

@@ -1,0 +1,92 @@
+a.lightbox_preview img {
+  margin: 0 4px;
+  width: 18px;
+}
+
+.fancybox-custom .fancybox-skin {
+  box-shadow: 0 0 50px #222;
+}
+
+/* move prev/next buttons outside
+ * fixes issue #5
+ *
+ * source:
+ * - http://fancyapps.com/fancybox/#useful
+ * - http://jsfiddle.net/Xh3B2/
+ */
+.fancybox-nav { width: 70px; }
+
+.fancybox-nav span {
+  visibility: visible;
+  opacity: 0.3;
+}
+
+.fancybox-nav:hover span { opacity: 1; }
+.fancybox-next { right: -70px; }
+.fancybox-prev { left: -70px; }
+
+.fancybox-container .fancybox-thumbs__list,
+.fancybox-show-thumbs .fancybox-thumbs {
+  background: black;
+}
+
+.fancybox-toolbar .fancybox-button.fancybox-button--play {
+  display: none;
+}
+
+.fancybox-caption, .fancybox-infobar, .fancybox-navigation .fancybox-button, .fancybox-toolbar {
+  opacity: 1;
+}
+
+.fancybox-show-thumbs .fancybox-inner {
+  right: 0px;
+  bottom: 106px;
+}
+
+.fancybox-navigation .fancybox-button div {
+  box-sizing: border-box;
+  height: 114px;
+  width: 56px;
+}
+
+.fancybox-navigation .fancybox-button {
+  height: auto;
+  width: auto;
+}
+
+.fancybox-show-thumbs .fancybox-thumbs {
+  bottom: 0px;
+  left: 0px;
+  top: unset;
+  right: unset;
+  width: 100%;
+}
+
+.fancybox-container .fancybox-thumbs__list {
+  width: 100%;
+  height: 106px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.fancybox-container .fancybox-thumbs__list a {
+  flex: 0 0 auto;
+  height: 84px;
+  width: 140px;
+}
+
+.fancybox-thumbs__list a:before {
+  border: 4px solid var(--blue_500);
+}
+
+.fancybox-button--arrow_left svg {
+  transform: scaleX(-1);
+}
+
+.fancybox-navigation .fancybox-button svg {
+    width: 75%;
+    height: 75%;
+    left: 15%;
+    top: 12%;
+}

@@ -1,0 +1,6 @@
+<p>
+  <% if project.permission_approve_time? %>
+    <%= content_tag(:label, l(:approved)) %>
+    <%= check_box :time_entry, :approve %>
+  <% end %>
+</p>

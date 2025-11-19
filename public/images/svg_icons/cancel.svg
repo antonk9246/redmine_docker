@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/product/reply</title>
+    <g id="Icon/product/reply" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon-24px" transform="translate(3.000000, 5.000000)" fill="#f24336">
+            <path d="M7,4 L7,0 L0,7 L7,14 L7,9.9 C12,9.9 15.5,11.5 18,15 C17,10 14,5 7,4 L7,4 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

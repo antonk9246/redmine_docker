@@ -1,0 +1,53 @@
+<fieldset>
+  <%= content_tag(:legend, l(:default_assign_text_settings)) %>
+  <%= content_tag(:p, l(:default_assign_settings_help)) %>
+
+  <p>
+    <%= content_tag(:label, l(:label_user)) %>
+
+    <%-
+      users = Principal.active.order('firstname ASC')
+      selected = @settings['default_assignee_id'] unless @settings['default_assignee_id'].blank?
+      selected ||= []
+    -%>
+
+    <% unless users.empty? %>
+      <%=
+        select_tag("settings[default_assignee_id]",
+                   content_tag(:option, '') +
+                   options_from_collection_for_select(users, :id, :name,
+                   unless selected.blank?
+                   Integer(selected)
+                   end
+                   ),
+                   :multiple => false,
+                   :size => 5)
+      %>
+    <% else %>
+      <%= link_to(l(:default_assign_missing_users),
+                    :controller => 'users', :action => 'index') %>
+    <% end %>
+  </p>
+
+  <p><%= l(:interactive_assignment_explanation) %></p>
+  <p>
+    <%= label('settings[interactive_assignment]', l(:interactive_assignment)) %>
+    <%-
+      interactive_assignment = @settings['interactive_assignment'] || 'true'
+      interactive_assignment = (interactive_assignment == 'true')
+    -%>
+    <%= hidden_field_tag('settings[interactive_assignment]', false) %>
+    <%= check_box_tag('settings[interactive_assignment]', true, interactive_assignment) %>
+  </p>
+
+  <p><%= l(:self_assignment_explanation) %></p>
+  <p>
+    <%= label('settings[self_assignment]', l(:self_assignment)) %>
+    <%-
+      self_assignment = @settings['self_assignment'] || 'false'
+      self_assignment = (self_assignment == 'true')
+    -%>
+    <%= hidden_field_tag('settings[self_assignment]', false) %>
+    <%= check_box_tag('settings[self_assignment]', true, self_assignment) %>
+  </p>
+</fieldset>

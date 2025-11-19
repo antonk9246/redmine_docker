@@ -1,0 +1,342 @@
+/** Easy Tree style */
+.easy-tree {
+    min-height: 20px;
+    margin-bottom: 20px;
+    background-color: var(--neutral_30);
+    color: #fff;
+    border: none;
+    border-top: none;
+    padding-bottom: 15px;
+    padding-left: 16px !important;
+}
+
+.easy-tree > ul {
+    padding-left: 15px;
+}
+
+.easy-tree li {
+    list-style-type: none;
+    margin: 0;
+    padding: 8px 5px 0 5px;
+    position: relative
+}
+
+.easy-tree li::before, .easy-tree li::after {
+    content: '';
+    left: -44px;
+    position: absolute;
+    right: auto
+}
+
+.easy-tree li::before {
+    border-left: 1px solid var(--neutral_500);
+    bottom: 50px;
+    height: 100%;
+    top: -14px;
+    width: 1px
+}
+
+.easy-tree li::after {
+    border-top: 1px solid var(--neutral_500);
+    height: 18px;
+    top: 18px;
+    width: 46px;
+}
+
+.easy-tree .tip li::before,
+.easy-tree .tip li::after {
+  border: none;
+}
+
+.easy-tree li > span {
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0px 12px 0px 4px;
+    text-decoration: none
+}
+
+.easy-tree > ul.projects > .parent_li > .projects > li.child:last-child {
+  margin-bottom: 8px;
+}
+
+.easy-tree li > span:hover {
+  box-shadow: 0 1px 4px 0 rgba(7, 29, 51, 0.2), 0 0 1px 0 rgba(7, 29, 51, 0.2);
+}
+
+.easy-tree ul.projects li.root {
+  padding-bottom: 8px;
+}
+
+.easy-tree li.parent_li > span {
+    cursor: pointer
+}
+
+
+.easy-tree > ul > li::before, .easy-tree > ul > li::after {
+    border: 0
+}
+
+.easy-tree li:last-child::before {
+    height: 32px
+}
+
+/*.easy-tree li.parent_li > span:hover, .easy-tree li.parent_li > span:hover + ul li span {
+    background: #ff6c60;
+    color: #fff;
+}
+*/
+/*.easy-tree li.parent_li > span:hover + ul li.li_selected span {
+    background: #e5e2e1;
+    color: #e56155;
+}*/
+
+.easy-tree li > span > a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Manrope-Bold';
+    font-size: 12px;
+    line-height: 24px;
+    margin-left: 8px;
+    display: inline-block;
+}
+
+.easy-tree li > span > span.glyphicon-folder-close, .easy-tree li > span > span.glyphicon-folder-open {
+    margin-right: 5px;
+}
+
+/*.easy-tree li.li_selected > span, .easy-tree li.li_selected > span > a {
+    background: #e5e2e1;
+    color: #e56155;
+}*/
+
+.easy-tree li.li_selected > span:hover, .easy-tree li.li_selected > span:hover > a {
+    background: #fafafa;
+    color: #ff6c60;
+}
+
+.easy-tree .easy-tree-toolbar {
+    background-color: #fff;
+}
+
+.easy-tree .easy-tree-toolbar > div {
+    display: inline-block;
+}
+
+.easy-tree .easy-tree-toolbar > div > button {
+    border-radius: 0;
+    margin: 20px 5px;
+}
+
+.easy-tree .easy-tree-toolbar .create .input-group {
+    top: -15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.easy-tree .easy-tree-toolbar .create .input-group input {
+    border-radius: 0;
+}
+
+.easy-tree .easy-tree-toolbar .create .input-group button {
+    border-radius: 0;
+}
+ul.projects{
+    background: none !important;
+    border: none !important;
+}
+li ul li.child > span{
+    background: var(--blue_10) !important;
+    box-shadow: inset 0 0 0px 1px var(--neutral_400) !important;
+    color: #606b76;
+}
+li ul li.child span a {
+    color: #606b76;
+}
+li.root > span {
+    background: var(--blue_400) !important;
+    box-shadow: inset 0 0 0px 1px var(--blue_600) !important;
+    color: #fff;
+}
+
+li.root > span:hover,
+li ul li.child > span:hover {
+  box-shadow: 0 1px 4px 0 rgba(7, 29, 51, 0.2), 0 0 1px 0 rgba(7, 29, 51, 0.2);
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('fonts/glyphicons-halflings-regular.eot');
+  src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+.glyphicon {
+  position: relative;
+  /* top: 1px; */
+  vertical-align: middle;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  height: 18px;
+  width: 18px;
+}
+
+.glyphicon:empty {
+  width: 1em;
+}
+
+.glyphicon-folder-close:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/folder-arrow-down.svg);
+  background-size: 24px;
+  margin-left: -2px;
+  margin-top: -4px;
+}
+
+.glyphicon-folder-open:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/folder-arrow-up.svg);
+  background-size: 24px;
+  margin-left: -2px;
+  margin-top: -4px;
+}
+
+.root > span > .glyphicon-folder-close:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/folder-arrow-down-white.svg);
+  background-size: 24px;
+}
+
+.root > span > .glyphicon-folder-open:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/folder-arrow-up-white.svg);
+  background-size: 24px;
+}
+
+.root > span > .glyphicon-folder-open:after {
+  content: "";
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  border: 4px solid white;
+  position: absolute;
+  left: -23px;
+  top: 0px;
+  background-color: var(--blue_500);
+  z-index: 2;
+}
+
+
+.glyphicon-file:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/icon-product-folder-new.svg);
+  background-size: 24px;
+}
+
+.root > span > .glyphicon-file:before {
+  content: "";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-image: url(../images/icon-product-folder-new-white.svg);
+  background-size: 24px;
+}
+
+.easy-tree li > span > .tip {
+  display: none;
+  width: 320px;
+  padding: var(--padding_xl);
+  position: absolute;
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: var(--shadow_dropdown);
+  border: solid 1px #e3e7eb;
+  z-index: 2;
+  max-height: 360px;
+  overflow-y: auto;
+  margin-top: 0px;
+  margin-left: 0px;
+  padding-bottom: 16px;
+}
+
+.easy-tree li > span:hover .tip {
+  display: block;
+}
+
+.easy-tree li > span > .tip a {
+  color: var(--blue_600) !important;
+}
+
+.easy-tree li > span > .tip a:hover {
+  text-decoration: underline;
+  color: var(--blue_500) !important;
+}
+
+.easy-tree li > span > .tip a:first-child {
+  color: var(--black) !important;
+  font-family: 'Manrope-Bold';
+  font-size: 16px;
+  line-height: 24px;
+  background: var(--white);
+  padding: 0px;
+}
+
+.easy-tree li > span > .tip a:hover {
+  background: transparent !important;
+}
+
+.easy-tree li > span > .tip p,
+.easy-tree li > span > .tip {
+  font-family: 'Manrope';
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 16px;
+  letter-spacing: -0.73px;
+  background: var(--white) !important;
+  color: #434b53;
+}
+
+.easy-tree li > span > .tip::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.easy-tree li > span > .tip::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.easy-tree li > span > .tip::-webkit-scrollbar-thumb {
+  background-color: #a8b0b9;
+}
+
+.wiki-anchor {
+  display: none !important;
+}
+
+.easy-tree .tip h2,
+.easy-tree .tip h3,
+.easy-tree .tip h4,
+.easy-tree .tip .wiki h1,
+.easy-tree .tip .wiki h2,
+.easy-tree .tip .wiki h3 {
+  line-height: 24px;
+}

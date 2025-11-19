@@ -1,0 +1,13 @@
+vladimir.gorin@twinslash.com:
+  token: 5742a5338ad9248daa72950f4376a425
+
+c.xander@gmail.com:
+  token: e6b862c698d94e861a852add08fed71c
+
+super_user:
+  # You can use an api token or email/password for the PT api.
+  token: 5742a5338ad9248daa72950f4376a425
+
+error_notification:
+  recipient: vladimir.gorin@twinslash.com
+  from: redmine@tsdv.net

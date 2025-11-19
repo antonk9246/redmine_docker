@@ -1,0 +1,120 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 2.6
+  TargetRailsVersion: 5.2
+  NewCops: enable
+
+Rails:
+  Enabled: true
+
+Minitest/MultipleAssertions:
+  Max: 5
+  Enabled: true
+
+Minitest/AssertPredicate:
+  Enabled: false
+
+Minitest/TestMethodName:
+  Enabled: true
+  Exclude:
+    - 'test/test_helper.rb'
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: true
+  CountKeywordArgs: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 25
+
+Style/HashConversion:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 140
+
+Metrics/MethodLength:
+  Max: 60
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 25
+
+Rails/ApplicationJob:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
+
+Rails/HelperInstanceVariable:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Performance/ChainArrayAllocation:
+  Enabled: true
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/ExpandPathArguments:
+  Enabled: true
+  Exclude:
+    - test/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  Exclude:
+    - '/**/*.rsb'
+
+Style/OptionHash:
+  Enabled: true
+  SuspiciousParamNames:
+    - options
+    - api_options
+    - opts
+    - args
+    - params
+    - parameters
+    - settings
+
+Style/ReturnNil:
+  Enabled: true
+
+Style/UnlessLogicalOperators:
+  Enabled: true
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  AllowParenthesesInMultilineCall: true
+  AllowParenthesesInChaining: true
+  EnforcedStyle: omit_parentheses
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: true
+  Exclude:
+    - 'test/**/*'

@@ -1,0 +1,14 @@
+# Danish strings go here for Rails i18n
+da:
+  field_project_name: Project name
+  field_git: Git
+  project_git_true: True
+  project_git_false: False
+  field_next_roadmap_due_date: Next roadmap due date
+  field_favourites: Favourites
+  label_tree_view: Hierarichal View
+  enumeration_project_priorities: Project priorities
+  enumeration_project_statuses: Project statuses
+  field_roadmap_due_at: Roadmap due at
+  field_enum_priority: Priority
+  field_enum_status: Enum status

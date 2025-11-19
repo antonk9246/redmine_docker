@@ -1,0 +1,4 @@
+<p>
+  <%= content_tag(:label, l(:approver_role)) %>
+  <%= select_tag('settings[approve_role_id]', options_from_collection_for_select(Role.sorted, :id, :name, RbTuning.approve_role_id), :include_blank => true) %>
+</p>

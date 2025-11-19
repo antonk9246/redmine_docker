@@ -1,0 +1,39 @@
+.expand-row {
+    background-image: url(../images/toggle-arrow-open.gif);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    margin-left: 0;
+    cursor: pointer;
+}
+
+.collapse-row {
+    background-image: url(../images/toggle-arrow-closed.gif);
+    background-repeat:no-repeat;
+    padding-left: 15px;
+    margin-left: 0;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+tr.project.idnt-1 td.arrow {padding-left: 0.5em;}
+tr.project.idnt-2 td.arrow {padding-left: 1em;}
+tr.project.idnt-3 td.arrow {padding-left: 2em;}
+tr.project.idnt-4 td.arrow {padding-left: 3em;}
+tr.project.idnt-5 td.arrow {padding-left: 4em;}
+tr.project.idnt-6 td.arrow {padding-left: 5em;}
+tr.project.idnt-7 td.arrow {padding-left: 6em;}
+tr.project.idnt-8 td.arrow {padding-left: 7em;}
+tr.project.idnt-9 td.arrow {padding-left: 8em;}
+
+tr.project.root {background-color: #A4D5DB; border-top: 2pt solid #366C73}
+tr.project.idnt-2 {background-color: #f0ffff}
+tr.project.idnt-3 {background-color:  #f0f1ff}
+tr.project.idnt-4 {background-color: #fffff0}
+tr.project.idnt-5 {background-color: #fff0f8}
+tr.project.idnt-6 {background-color: #fff7f0}
+tr.project.idnt-7 {background-color: #bde0ff}
+tr.project.idnt-8 {background-color: #d7ecff}
+tr.project.idnt-9 {background-color: #fff7f0}

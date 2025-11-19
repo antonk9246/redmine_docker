@@ -1,0 +1,14 @@
+<h2><%= link_to l(:label_query_new), url_for(:back), class: 'h2 arrow-back' %></h2>
+
+<%= form_tag(projects_queries_path, :onsubmit => 'selectAllOptions("selected_columns");') do %>
+  <%= render :partial => 'projects_queries/form', :locals => {:query => @query} %>
+  <%= submit_tag l(:button_save) %>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+    $("#query_sort_criteria_attribute_0").parents("fieldset").remove()
+    $("#query_is_for_all").parents("p").remove()
+    $("#query_default_columns").parents("fieldset").find("p").not('p:first').remove()
+  })
+</script>

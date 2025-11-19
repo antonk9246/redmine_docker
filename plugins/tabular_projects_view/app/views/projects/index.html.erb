@@ -1,0 +1,237 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "tabular_projects_view.css", :plugin => "tabular_projects_view" %>
+  <%= stylesheet_link_tag "easytree.css", :plugin => "tabular_projects_view" %>
+  <%= javascript_include_tag 'easytree.js', :plugin => 'tabular_projects_view'  %>
+<% end %>
+
+<%- if User.current.logged? && !(User.current.respond_to?(:external?) && User.current.external?) %>
+  <div class="contextual project-index" id="project-contextual">
+    <%= render_project_action_links %>
+    <%= link_to l(:label_projects_import), 
+            { controller: 'import_objects', action: 'run_task', task: 'projects_from_google_sheets' },
+            method: :post,
+            class: 'button icon icon-import',
+            data: { confirm: l(:text_are_you_sure) } if User.current.admin? %>
+    <a href="#" class="hierarichal_view icon icon-list" style='display: none;'><%= l(:option_hierarchical_view) if @query.valid? %></a>
+  </div>
+  <h2><%= l(:label_project_plural) %> </h2>
+<% end %>
+<!-- <h2><%= @query.new_record? ? l(:label_project_plural) : h(@query.name) %></h2> -->
+<% html_title(@query.new_record? ? l(:label_project_plural) : @query.name) %>
+  <div class="filters-table">
+<%= form_tag({:controller => 'projects', :action => 'index'}, :data => {:cm_url => projects_context_menu_path},
+             :method => :get, :id => 'query_form') do %>
+    <%= hidden_field_tag 'set_filter', '1' %>
+    <div id="query_form_with_buttons" class="hide-when-print">
+      <div id="query_form_content" class="hide-when-print d-flex">
+        <fieldset id="filters" class="collapsible <%= @query.new_record? ? "" : "collapsed" %>" style="margin-top: 39px">
+          <legend onclick="toggleFieldset(this);"><%= l(:label_filter_plural) %></legend>
+          <div style="<%= @query.new_record? ? "" : "display: none;" %>">
+            <%= render :partial => 'projects_view_type' if @query.valid? %>
+            <%= render :partial => 'project_queries/filters', :locals => {:query => @query} %>
+          </div>
+        </fieldset>
+        <fieldset class="collapsible collapsed">
+          <legend onclick="toggleFieldset(this);"><%= l(:label_options) %></legend>
+          <div style="display: none;">
+            <table>
+              <tr>
+                <td colspan='2'><%= render_query_columns_selection(@query) %></td>
+              </tr>
+              <tr>
+                <td><label for='group_by'><%= l(:field_group_by) %></label></td>
+                <td><%= select_tag('group_by',
+                                   options_for_select(
+                                           [[]] + @query.groupable_columns.collect {|c| [c.caption, c.name.to_s]},
+                                           @query.group_by)
+                        ) %></td>
+              </tr>
+            </table>
+          </div>
+        </fieldset>
+      </div>
+      <p class="buttons hide-when-print">
+
+        <%= link_to_function l(:button_apply), '$("#query_form").submit()', :class => 'icon icon-checked' %>
+        <%= link_to l(:button_clear), {:set_filter => 1, :sort => 'identifier'}, :class => 'icon icon-reload' %>
+        <% if @query.new_record? %>
+            <%= link_to_function l(:button_save),
+                                 "$('#query_form').attr('action', '#{ new_projects_query_path }').submit()",
+                                 :class => 'icon icon-save' %>
+        <% end %>
+        <span class="contextual" style='margin-top: -8px;'>
+          <% if !@query.new_record? && @query.editable_by?(User.current) %>
+              <%= link_to l(:button_edit), edit_projects_query_path(@query), :class => 'icon icon-edit' %>
+              <% if @query.user == User.current %>
+                  <%= delete_link projects_query_path(@query) %>
+              <% end %>
+
+          <% end %>
+        </span>
+      </p>
+    </div>
+<% end if User.current.logged? %>
+  </div>
+
+<%= error_messages_for 'query' %>
+<div class="project-view">
+  <% if @query.valid? %>
+      <% if @projects.empty? %>
+          <p class="nodata"><%= l(:label_no_data) %></p>
+    <% else %>
+      <% if session[:projects_view_type] == "hierarichal" %>
+        <%= render :partial => 'projects/hierarichal', :locals => {:projects => @projects, :query => @query, :links => true} %>
+      <% else %>
+        <%= render :partial => 'projects/list', :locals => {:projects => @projects, :query => @query, :links => true} %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if User.current.logged? && User.current.respond_to?(:all_favourite_marked_projects)%>
+    <p style="text-align:right;">
+      <span class="my-project"><%= l(:favourite_projects_box) %></span>
+    </p>
+<% end %>
+
+<% other_formats_links do |f| %>
+  <%= f.link_to_with_query_parameters 'CSV', {}, :onclick => "showModal('csv-export-options', '350px'); return false;" %>
+<% end %>
+
+<div id="xls-export-options" style="display:none;">
+  <h3 class="title"><%= l(:label_export_options, :export_format => 'XLS') %></h3>
+  <%= form_tag(request.query_parameters.merge({:format => 'xls', :page => nil}), :method => :get, :id => 'xls-export-form') do %>
+      <p>
+        <label><%= radio_button_tag 'columns', '', true %> <%= l(:description_selected_columns) %></label><br/>
+        <label><%= radio_button_tag 'columns', 'all' %> <%= l(:description_all_columns) %></label>
+      </p>
+
+      <p>
+        <label><%= check_box_tag 'description', '1' %> <%= l(:field_description) %></label>
+      </p>
+
+      <p class="buttons">
+        <% if params[:show] == 'all' %>
+            <%= hidden_field_tag :show, 'all' %>
+        <% end %>
+        <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
+        <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+      </p>
+  <% end %>
+</div>
+
+<div id="csv-export-options" style="display:none;">
+  <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
+  <%= form_tag(request.query_parameters.merge({:format => 'csv', :page => nil}), :method => :get, :id => 'csv-export-form') do %>
+      <p>
+        <label><%= radio_button_tag 'columns', '', true %> <%= l(:description_selected_columns) %></label><br/>
+        <label><%= radio_button_tag 'columns', 'all' %> <%= l(:description_all_columns) %></label>
+      </p>
+
+      <p>
+        <label><%= check_box_tag 'description', '1' %> <%= l(:field_description) %></label>
+      </p>
+
+      <p class="buttons">
+        <% if params[:show] == 'all' %>
+            <%= hidden_field_tag :show, 'all' %>
+        <% end %>
+        <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
+        <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+      </p>
+  <% end %>
+</div>
+
+<% html_title(l(:label_project_plural)) -%>
+
+<%= context_menu %>
+
+<% content_for :sidebar do %>
+    <%= render_sidebar_project_queries %>
+<% end %>
+<%= stylesheet_link_tag 'index_projects_view.css',  plugin: 'tabular_projects_view', media: 'all' %>
+
+<script>
+    $(document).tooltip();
+    function toggleOperator(field) {
+        var fieldId = field.replace('.', '_');
+        var operator = $("#operators_" + fieldId);
+        switch (operator.val()) {
+            case "!*":
+            case "*":
+            case "t":
+            case "w":
+            case "o":
+            case "c":
+            case "ar":
+            case "i":
+                enableValues(field, []);
+                break;
+            case "><":
+                enableValues(field, [0,1]);
+                break;
+            case "<t+":
+            case ">t+":
+            case "t+":
+            case ">t-":
+            case "<t-":
+            case "t-":
+                enableValues(field, [2]);
+                break;
+            default:
+                enableValues(field, [0]);
+                break;
+        }
+    }
+</script>
+
+<%- if User.current.logged? %>
+  <script>
+    function show_all_projects(id) {
+        var parameters = '';
+        parameters = location.search.substr(location.search.indexOf("?")+1);
+        parameters = parameters + '&show=all&sort=identifier&f[]=status&op[status]=*';
+        parameters = decodeURIComponent(parameters);
+        var params_array = [];
+        params_array = parameters .split('&');
+        var uniqueParams = [];
+        $.each(params_array, function(i, el){
+            if($.inArray(el, uniqueParams) === -1) uniqueParams.push(el);
+        });
+        parameters = uniqueParams.join('&');
+        document.location.href = '/projects?' + parameters;
+      }
+
+    $(document).ready(function () {
+        //hirarical view
+        let hierarichal_view = $('.hierarichal_view');
+        hierarichal_view.insertBefore($('.select-columns-button'));
+        let viewType = getViewType();
+        if (viewType === 'hierarichal')
+            hierarichal_view.text('<%= l(:label_tree_view) %>');
+        else
+            hierarichal_view.text('<%= l(:label_table_view) %>');
+    });
+
+    $(document).on('click', '.hierarichal_view', function () {
+        let projects_view_type = getViewType();
+
+        const link = new URL(location.href);
+        link.searchParams.delete('projects_view_type');
+        link.searchParams.append('projects_view_type', projects_view_type);
+        document.location.href = link
+    });
+
+    function getViewType() {
+        let viewType = "<%= session[:projects_view_type] || 'tabular' %>"
+
+        if (viewType === 'hierarichal')
+            return 'tabular'
+        else
+            return 'hierarichal'
+    }
+  </script>
+<%- end %>
+
+
+
