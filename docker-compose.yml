@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: redmine_postgres
+    environment:
+      POSTGRES_USER: redmine
+      POSTGRES_PASSWORD: redmine_password_123
+      POSTGRES_DB: redmine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redmine -d redmine"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redmine:
+    image: redmine:4.2
+    container_name: redmine_app
+    environment:
+      REDMINE_DB_POSTGRES: postgres
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: redmine_password_123
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_SECRET_KEY_BASE: "your-secret-key-base-here"
+    ports:
+      - "8080:3000"
+    volumes:
+      #- ./plugins:/usr/src/redmine/plugins
+      - ./public/themes:/usr/src/redmine/public/themes
+      - redmine_files:/usr/src/redmine/files
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  redmine_files:
